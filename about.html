@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — CK & IJ Trading & Projects</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --blue:   #0f2d6b;
+  --blue2:  #1a4faa;
+  --red:    #c0181e;
+  --red2:   #e8232a;
+  --green:  #0a5c3a;
+  --green2: #0e7a4e;
+  --white:  #f4f4f0;
+  --dark:   #080d14;
+  --grad:   linear-gradient(135deg, var(--blue) 0%, var(--red) 48%, var(--green) 100%);
+  --grad2:  linear-gradient(90deg, var(--blue) 0%, var(--red2) 50%, var(--green2) 100%);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Barlow', sans-serif; background: var(--dark); color: var(--white); overflow-x: hidden; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--grad); border-radius: 3px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 5vw; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(8,13,20,0.75); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06); transition: all .4s;
+}
+nav.scrolled { height: 60px; background: rgba(8,13,20,0.97); border-bottom-color: var(--red); }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-badge {
+  width: 42px; height: 42px; background: var(--grad); border-radius: 10px;
+  display: grid; place-items: center; font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; line-height: 1; color: #fff; text-align: center; transition: transform .3s;
+}
+.nav-logo:hover .nav-logo-badge { transform: rotate(-8deg) scale(1.08); }
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+.nav-logo-text strong { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 2px; color: var(--white); }
+.nav-logo-text span { font-family: 'Barlow Condensed', sans-serif; font-size: .7rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--red2); }
+.nav-links { display: flex; gap: 2px; list-style: none; }
+.nav-links a {
+  display: block; padding: 6px 14px; font-family: 'Barlow Condensed', sans-serif;
+  font-size: .8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(244,244,240,0.65); text-decoration: none; position: relative; transition: color .3s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 50%; right: 50%;
+  height: 2px; background: var(--grad2); transition: left .3s, right .3s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { left: 0; right: 0; }
+.nav-links a.active { color: #fff; }
+.nav-links a.active::after { left: 0; right: 0; }
+.nav-cta {
+  font-family: 'Barlow Condensed', sans-serif; font-size: .8rem; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase; padding: 9px 22px;
+  background: var(--red); color: #fff; border: none; border-radius: 4px;
+  cursor: pointer; text-decoration: none; transition: all .3s; position: relative; overflow: hidden;
+}
+.nav-cta::before { content: ''; position: absolute; inset: 0; background: var(--grad); opacity: 0; transition: opacity .3s; }
+.nav-cta:hover::before { opacity: 1; }
+.nav-cta span { position: relative; z-index: 1; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; }
+.hamburger span { display: block; height: 2px; width: 26px; background: var(--white); border-radius: 2px; transition: all .35s; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none; position: fixed; top: 72px; left: 0; right: 0;
+  background: rgba(8,13,20,0.98); backdrop-filter: blur(20px); z-index: 99;
+  padding: 24px 5vw 32px; border-bottom: 2px solid var(--red);
+  pointer-events: none; opacity: 0; transform: translateY(-10px); transition: all .3s;
+}
+.mobile-menu.open { display: flex; flex-direction: column; gap: 8px; pointer-events: all; opacity: 1; transform: translateY(0); }
+.mobile-menu a { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; color: rgba(244,244,240,0.7); text-decoration: none; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color .2s, padding-left .2s; }
+.mobile-menu a:hover { color: #fff; padding-left: 10px; }
+
+/* ─── HERO ─── */
+.hero {
+  position: relative; height: 80vh; min-height: 600px;
+  display: flex; align-items: flex-end; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.pexels.com/photos/1036936/pexels-photo-1036936.jpeg?auto=compress&cs=tinysrgb&w=1920');
+  background-size: cover; background-position: center 30%;
+  transform: scale(1.06); transition: transform 10s ease;
+}
+.hero:hover .hero-bg { transform: scale(1.0); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(15,45,107,0.75) 0%, rgba(192,24,30,0.45) 40%, rgba(8,13,20,0.92) 100%);
+}
+.hero-grain {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px;
+}
+/* Large BG text */
+.hero-bg-text {
+  position: absolute; bottom: -20px; right: -10px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(8rem, 20vw, 22rem);
+  line-height: 1; letter-spacing: -4px;
+  color: rgba(255,255,255,0.03);
+  pointer-events: none; user-select: none;
+  white-space: nowrap;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 5vw 64px;
+  width: 100%; max-width: 1400px; margin: 0 auto;
+}
+.hero-breadcrumb {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: .72rem;
+  font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); margin-bottom: 20px;
+  animation: fadeUp .6s ease both;
+}
+.hero-breadcrumb a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color .2s; }
+.hero-breadcrumb a:hover { color: #fff; }
+.hero-breadcrumb .sep { color: rgba(255,255,255,0.2); }
+.hero-breadcrumb .current { color: var(--red2); }
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: .92; letter-spacing: 2px; margin-bottom: 24px;
+  animation: fadeUp .7s .1s ease both;
+}
+.hero-title .l1 { display: block; color: rgba(255,255,255,0.5); font-size: 40%; letter-spacing: 10px; margin-bottom: 10px; }
+.hero-title .l2 { display: block; color: #fff; }
+.hero-title .l3 { display: block; background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub {
+  font-size: 1.05rem; font-weight: 300; line-height: 1.7;
+  color: rgba(255,255,255,0.65); max-width: 520px;
+  animation: fadeUp .7s .2s ease both;
+}
+.hero-chips {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px;
+  animation: fadeUp .7s .3s ease both;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px; border-radius: 100px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px); font-family: 'Barlow Condensed', sans-serif;
+  font-size: .75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+}
+.chip .dot { width: 7px; height: 7px; border-radius: 50%; }
+.chip.blue .dot { background: #6fa3ef; }
+.chip.red .dot { background: var(--red2); }
+.chip.green .dot { background: var(--green2); }
+
+/* ─── TICKER ─── */
+.ticker-wrap { background: var(--red); padding: 12px 0; overflow: hidden; white-space: nowrap; }
+.ticker { display: inline-block; animation: ticker 28s linear infinite; }
+.ticker span { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 4px; color: rgba(255,255,255,0.85); padding: 0 40px; }
+.ticker span i { margin-right: 10px; opacity: 0.6; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTION SHARED ─── */
+.sec-tag {
+  display: inline-block; font-family: 'Barlow Condensed', sans-serif; font-size: .72rem;
+  font-weight: 800; letter-spacing: 5px; text-transform: uppercase; padding: 6px 20px;
+  border-radius: 100px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); margin-bottom: 20px;
+}
+.grad-text { background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.grad-divider { height: 3px; background: var(--grad2); }
+
+/* ─── STORY SECTION ─── */
+.story-section { padding: 120px 5vw; background: var(--dark); }
+.story-grid {
+  max-width: 1300px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center;
+}
+.story-text .sec-tag { display: block; }
+.story-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+  line-height: .95; letter-spacing: 1px; margin-bottom: 28px;
+}
+.story-body {
+  font-size: 1.05rem; font-weight: 300; line-height: 1.9;
+  color: rgba(255,255,255,0.6); border-left: 3px solid var(--red);
+  padding-left: 22px; margin-bottom: 20px;
+}
+.story-body + .story-body { border-color: var(--green2); }
+
+/* Stat strip */
+.stat-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: rgba(255,255,255,0.06);
+  border-radius: 14px; overflow: hidden; margin-top: 36px;
+}
+.stat-item {
+  background: rgba(255,255,255,0.04); padding: 24px 20px; text-align: center;
+  transition: background .3s;
+}
+.stat-item:hover { background: rgba(255,255,255,0.09); }
+.stat-item .num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; line-height: 1;
+  background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-item .lbl { font-size: .68rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+/* Image mosaic */
+.story-mosaic { position: relative; height: 540px; }
+.mosaic-a {
+  position: absolute; top: 0; left: 0; width: 65%; height: 70%;
+  border-radius: 18px; overflow: hidden;
+  background-image: url('https://images.pexels.com/photos/158398/construction-site-trucks-excavators-construction-machinery-158398.jpeg?auto=compress&cs=tinysrgb&w=900');
+  background-size: cover; background-position: center;
+  transition: transform .5s;
+}
+.mosaic-a::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15,45,107,0.35), transparent); }
+.mosaic-a:hover { transform: scale(1.02); }
+.mosaic-b {
+  position: absolute; bottom: 0; right: 0; width: 58%; height: 58%;
+  border-radius: 18px; overflow: hidden; border: 4px solid var(--dark);
+  background-image: url('https://images.pexels.com/photos/25727947/pexels-photo-25727947/free-photo-of-mining-excavator-loading-dump-truck.jpeg?auto=compress&cs=tinysrgb&w=900');
+  background-size: cover; background-position: center;
+  transition: transform .5s;
+}
+.mosaic-b::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(192,24,30,0.3), transparent); }
+.mosaic-b:hover { transform: scale(1.02); }
+.mosaic-badge {
+  position: absolute; top: 46%; left: 52%; transform: translate(-50%, -50%);
+  z-index: 5; background: var(--dark); border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 16px; padding: 16px 22px; text-align: center; min-width: 130px;
+}
+.mosaic-badge .num { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; line-height: 1; background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.mosaic-badge .lbl { font-size: .62rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+
+/* ─── VISION MISSION ─── */
+.vm-section {
+  padding: 100px 5vw;
+  background: linear-gradient(180deg, rgba(15,45,107,0.1) 0%, rgba(192,24,30,0.05) 50%, rgba(10,92,58,0.08) 100%);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.vm-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.vm-card {
+  border-radius: 22px; padding: 52px 44px; position: relative; overflow: hidden;
+  transition: transform .4s, box-shadow .4s; cursor: default;
+}
+.vm-card:hover { transform: translateY(-8px); box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
+.vm-card.vision { background: linear-gradient(145deg, #0f2d6b, #1a4faa); }
+.vm-card.mission { background: linear-gradient(145deg, #8b0f12, #c0181e); }
+.vm-card-watermark {
+  position: absolute; bottom: -20px; right: -10px;
+  font-family: 'Bebas Neue', sans-serif; font-size: 9rem;
+  line-height: 1; color: rgba(255,255,255,0.06); pointer-events: none;
+}
+.vm-icon-wrap {
+  width: 64px; height: 64px; border-radius: 16px;
+  background: rgba(255,255,255,0.12); display: grid; place-items: center;
+  font-size: 1.6rem; margin-bottom: 28px; transition: transform .35s;
+}
+.vm-card:hover .vm-icon-wrap { transform: scale(1.1) rotate(-5deg); }
+.vm-card h2 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem;
+  letter-spacing: 3px; margin-bottom: 18px;
+}
+.vm-card p { font-size: 1rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.82); }
+
+/* ─── CORE VALUES ─── */
+.values-section {
+  padding: 100px 5vw; background: var(--dark);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.values-header { max-width: 1200px; margin: 0 auto 60px; text-align: center; }
+.values-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; letter-spacing: 2px; margin-bottom: 16px; }
+.values-sub { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.5); max-width: 480px; margin: 0 auto; }
+.values-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.val-card {
+  padding: 40px 28px; border-radius: 18px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  position: relative; overflow: hidden; transition: all .4s; cursor: default;
+}
+.val-card::before { content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity .4s; }
+.val-card:nth-child(1)::before { background: linear-gradient(135deg, rgba(15,45,107,0.3), transparent); }
+.val-card:nth-child(2)::before { background: linear-gradient(135deg, rgba(192,24,30,0.3), transparent); }
+.val-card:nth-child(3)::before { background: linear-gradient(135deg, rgba(10,92,58,0.3), transparent); }
+.val-card:nth-child(4)::before { background: linear-gradient(135deg, rgba(15,45,107,0.2), rgba(192,24,30,0.2), transparent); }
+.val-card:hover::before { opacity: 1; }
+.val-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.15); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+.val-num { position: absolute; top: 16px; right: 20px; font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 1; color: rgba(255,255,255,0.04); }
+.val-icon { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; font-size: 1.4rem; margin-bottom: 20px; transition: transform .35s; }
+.val-card:hover .val-icon { transform: scale(1.1) rotate(-5deg); }
+.val-card:nth-child(1) .val-icon { background: rgba(15,45,107,0.4); color: #6fa3ef; }
+.val-card:nth-child(2) .val-icon { background: rgba(192,24,30,0.3); color: #f4706b; }
+.val-card:nth-child(3) .val-icon { background: rgba(10,92,58,0.4); color: #4dc490; }
+.val-card:nth-child(4) .val-icon { background: rgba(255,255,255,0.07); color: #c8b8ff; }
+.val-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+.val-card p { font-size: .88rem; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.55); }
+
+/* ─── EMPOWERMENT ─── */
+.emp-section {
+  padding: 100px 5vw;
+  background: linear-gradient(180deg, rgba(10,92,58,0.08) 0%, rgba(8,13,20,0) 100%);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.emp-inner { max-width: 1300px; margin: 0 auto; }
+.emp-header { margin-bottom: 60px; }
+.emp-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; letter-spacing: 2px; margin-bottom: 14px; }
+.emp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.emp-card {
+  border-radius: 22px; padding: 44px; position: relative; overflow: hidden;
+  transition: transform .4s, box-shadow .4s; cursor: default;
+}
+.emp-card:hover { transform: translateY(-6px); box-shadow: 0 36px 72px rgba(0,0,0,0.5); }
+.emp-card.green-card { background: linear-gradient(145deg, #0a5c3a, #0e7a4e); }
+.emp-card.blue-card { background: linear-gradient(145deg, #0f2d6b, #1a4faa); }
+.emp-card-icon { font-size: 3rem; margin-bottom: 22px; opacity: .9; display: block; }
+.emp-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; margin-bottom: 14px; }
+.emp-card p { font-size: .95rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.82); }
+.emp-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.emp-tag {
+  padding: 7px 18px; border-radius: 100px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  font-family: 'Barlow Condensed', sans-serif; font-size: .75rem;
+  font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+}
+.emp-card-badge {
+  position: absolute; top: 24px; right: 24px;
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 2px;
+  padding: 7px 15px; border-radius: 100px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+}
+.reg-card {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 18px; padding: 32px 40px;
+}
+.reg-item { text-align: center; }
+.reg-item .reg-label { font-family: 'Barlow Condensed', sans-serif; font-size: .65rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 6px; }
+.reg-item .reg-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 2px; background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.reg-divider { width: 1px; height: 48px; background: rgba(255,255,255,0.08); }
+
+/* ─── FAMILY BANNER ─── */
+.family-banner {
+  position: relative; overflow: hidden; margin: 0 5vw 0;
+  border-radius: 24px;
+}
+.family-banner-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=1600');
+  background-size: cover; background-position: center 60%;
+  transition: transform .6s;
+}
+.family-banner:hover .family-banner-bg { transform: scale(1.04); }
+.family-banner-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(15,45,107,0.92) 0%, rgba(192,24,30,0.7) 50%, rgba(10,92,58,0.85) 100%);
+}
+.family-banner-inner {
+  position: relative; z-index: 2; padding: 72px 60px;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px;
+}
+.family-banner-inner h2 {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.4rem, 5vw, 4.2rem);
+  letter-spacing: 2px; line-height: 1; margin-bottom: 14px;
+}
+.family-banner-inner p { font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.75); max-width: 540px; }
+.family-year {
+  font-family: 'Bebas Neue', sans-serif; font-size: 8rem; line-height: 1;
+  letter-spacing: -4px; color: rgba(255,255,255,0.12); flex-shrink: 0;
+  user-select: none;
+}
+
+/* ─── WHY SECTION ─── */
+.why-section { padding: 100px 5vw; background: var(--dark); }
+.why-inner { max-width: 1200px; margin: 0 auto; }
+.why-header { margin-bottom: 56px; }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.why-card {
+  padding: 36px 32px; border-radius: 16px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  position: relative; overflow: hidden; transition: all .35s; cursor: default;
+}
+.why-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-6px); border-color: rgba(255,255,255,0.14); }
+.why-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.why-card:nth-child(1)::before { background: var(--blue2); }
+.why-card:nth-child(2)::before { background: var(--red2); }
+.why-card:nth-child(3)::before { background: var(--green2); }
+.why-icon { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; font-size: 1.3rem; margin-bottom: 20px; transition: transform .3s; }
+.why-card:hover .why-icon { transform: translateY(-4px); }
+.why-card:nth-child(1) .why-icon { background: rgba(15,45,107,0.4); color: #6fa3ef; }
+.why-card:nth-child(2) .why-icon { background: rgba(192,24,30,0.3); color: #f4706b; }
+.why-card:nth-child(3) .why-icon { background: rgba(10,92,58,0.4); color: #4dc490; }
+.why-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+.why-card p { font-size: .88rem; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.55); }
+
+/* ─── CONTACT STRIP ─── */
+.contact-strip {
+  padding: 80px 5vw;
+  background: linear-gradient(135deg, rgba(15,45,107,0.12), rgba(192,24,30,0.07), rgba(10,92,58,0.1));
+  border-top: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+}
+.contact-strip::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--grad2); }
+.contact-strip-inner { max-width: 1100px; margin: 0 auto; }
+.contact-strip h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 2px; margin-bottom: 48px; }
+.contact-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.contact-item {
+  display: flex; align-items: center; gap: 18px; padding: 22px 24px;
+  border-radius: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  transition: all .35s;
+}
+.contact-item:hover { background: rgba(255,255,255,0.09); transform: translateX(8px); border-color: rgba(255,255,255,0.15); }
+.ci-icon { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; font-size: 1.15rem; flex-shrink: 0; }
+.contact-item:nth-child(1) .ci-icon { background: rgba(15,45,107,0.5); color: #6fa3ef; }
+.contact-item:nth-child(2) .ci-icon { background: rgba(192,24,30,0.4); color: #f4706b; }
+.contact-item:nth-child(3) .ci-icon { background: rgba(10,92,58,0.5); color: #4dc490; }
+.ci-text h4 { font-family: 'Barlow Condensed', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 4px; }
+.ci-text p { font-size: .92rem; font-weight: 400; color: var(--white); }
+.ci-text span { font-size: .8rem; color: rgba(255,255,255,0.4); }
+
+/* ─── FOOTER ─── */
+footer { background: rgba(0,0,0,0.6); border-top: 1px solid rgba(255,255,255,0.06); padding: 48px 5vw 32px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 28px; flex-wrap: wrap; }
+.footer-brand p { margin-top: 14px; font-size: .88rem; font-weight: 300; color: rgba(255,255,255,0.4); max-width: 280px; line-height: 1.7; }
+.footer-links-col h4 { font-family: 'Barlow Condensed', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+.footer-links-col a { display: block; font-size: .88rem; font-weight: 300; color: rgba(255,255,255,0.55); text-decoration: none; padding: 4px 0; transition: color .25s, padding-left .25s; }
+.footer-links-col a:hover { color: #fff; padding-left: 6px; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-bottom p { font-size: .78rem; font-weight: 300; color: rgba(255,255,255,0.3); }
+.footer-bottom .reg { display: flex; gap: 20px; font-size: .72rem; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 2px; color: rgba(255,255,255,0.25); }
+.bbbee-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 100px; background: rgba(10,92,58,0.25); border: 1px solid rgba(14,122,78,0.4); font-family: 'Barlow Condensed', sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: 2px; color: #4dc490; }
+.bbbee-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green2); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+.reveal-delay-4 { transition-delay: .4s; }
+
+/* ─── MOBILE ─── */
+@media (max-width: 1024px) {
+  .story-grid { grid-template-columns: 1fr; gap: 48px; }
+  .story-mosaic { height: 380px; }
+  .vm-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .emp-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .why-grid .why-card:nth-child(3) { grid-column: span 2; }
+  .contact-items { grid-template-columns: 1fr; }
+  .family-banner-inner { grid-template-columns: 1fr; }
+  .family-year { display: none; }
+  .reg-card { justify-content: center; }
+  .reg-divider { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
+  .values-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .why-grid .why-card:nth-child(3) { grid-column: span 1; }
+  .family-banner-inner { padding: 48px 32px; }
+  .footer-top { flex-direction: column; }
+  .mosaic-b { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-badge">CK<br>&IJ</div>
+    <div class="nav-logo-text">
+      <strong>CK & IJ TRADING</strong>
+      <span>Tyre · Mining · Projects</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#" class="active">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta"><span>Get a Quote</span></a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="about.html" onclick="closeMobile()">About</a>
+  <a href="services.html" onclick="closeMobile()">Services</a>
+  <a href="contact.html" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-bg-text">ABOUT</div>
+
+  <div class="hero-content">
+    <div class="hero-breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span class="current">About Us</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="l1">Our Company</span>
+      <span class="l2">Built on</span>
+      <span class="l3">Trust &<br>Transformation</span>
+    </h1>
+    <p class="hero-sub">A family-owned, 100% Black enterprise with 51% female ownership — delivering exceptional industrial services since 2014.</p>
+    <div class="hero-chips">
+      <div class="chip blue"><div class="dot"></div>100% Black-Owned</div>
+      <div class="chip red"><div class="dot"></div>51% Female</div>
+      <div class="chip green"><div class="dot"></div>BBBEE Level 1</div>
+      <div class="chip blue"><div class="dot"></div>Est. 2014</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span><i class="fas fa-female"></i>51% Female Owned</span>
+    <span><i class="fas fa-shield-alt"></i>BBBEE Level 1</span>
+    <span><i class="fas fa-users"></i>Family Business</span>
+    <span><i class="fas fa-check-circle"></i>Fully Compliant</span>
+    <span><i class="fas fa-fist-raised"></i>Community Empowerment</span>
+    <span><i class="fas fa-calendar"></i>Established 2014</span>
+    <span><i class="fas fa-hard-hat"></i>Tyre &amp; Mining Specialists</span>
+    <span><i class="fas fa-handshake"></i>Trusted Partners</span>
+    <span><i class="fas fa-female"></i>51% Female Owned</span>
+    <span><i class="fas fa-shield-alt"></i>BBBEE Level 1</span>
+    <span><i class="fas fa-users"></i>Family Business</span>
+    <span><i class="fas fa-check-circle"></i>Fully Compliant</span>
+    <span><i class="fas fa-fist-raised"></i>Community Empowerment</span>
+    <span><i class="fas fa-calendar"></i>Established 2014</span>
+    <span><i class="fas fa-hard-hat"></i>Tyre &amp; Mining Specialists</span>
+    <span><i class="fas fa-handshake"></i>Trusted Partners</span>
+  </div>
+</div>
+
+<!-- ─── STORY ─── -->
+<section class="story-section" id="story">
+  <div class="story-grid">
+    <div class="story-text">
+      <span class="sec-tag reveal">Our Story</span>
+      <h2 class="story-title reveal reveal-delay-1">
+        A <span class="grad-text">Family Legacy</span><br>Built for<br>South Africa
+      </h2>
+      <p class="story-body reveal reveal-delay-2">
+        CK & IJ Trading & Projects is a 100% Black-owned enterprise with 51% black female ownership. Established in 2014 as a family-owned business, our organization is fully compliant with South African business regulations and committed to delivering exceptional service.
+      </p>
+      <p class="story-body reveal reveal-delay-3" style="border-color: var(--green2);">
+        We aim to empower communities while offering reliable and efficient solutions tailored to meet the specific needs of our clients across diverse industries — from deep-pit mining operations to precision tyre maintenance.
+      </p>
+      <div class="stat-strip reveal reveal-delay-4">
+        <div class="stat-item">
+          <div class="num">10+</div>
+          <div class="lbl">Years Active</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">51%</div>
+          <div class="lbl">Female Owned</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">L1</div>
+          <div class="lbl">BBBEE Status</div>
+        </div>
+      </div>
+    </div>
+    <div class="story-mosaic reveal reveal-delay-1">
+      <div class="mosaic-a"></div>
+      <div class="mosaic-b"></div>
+      <div class="mosaic-badge">
+        <div class="num">2014</div>
+        <div class="lbl">Est. Year</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="grad-divider"></div>
+
+<!-- ─── VISION & MISSION ─── -->
+<section class="vm-section" id="vm">
+  <div style="max-width:1200px; margin:0 auto 56px; text-align:center;" class="reveal">
+    <span class="sec-tag">Direction</span>
+    <h2 class="values-title" style="margin-top:16px;">Vision &amp; <span class="grad-text">Mission</span></h2>
+    <p class="values-sub">The north star that guides everything we build and every partnership we forge.</p>
+  </div>
+  <div class="vm-grid">
+    <div class="vm-card vision reveal">
+      <div class="vm-card-watermark">V</div>
+      <div class="vm-icon-wrap"><i class="fas fa-eye"></i></div>
+      <h2>Vision</h2>
+      <p>To become a leading service provider in equipment maintenance and mining-related services, known for our quality, reliability, and customer satisfaction across South Africa and beyond.</p>
+    </div>
+    <div class="vm-card mission reveal reveal-delay-1">
+      <div class="vm-card-watermark">M</div>
+      <div class="vm-icon-wrap"><i class="fas fa-rocket"></i></div>
+      <h2>Mission</h2>
+      <p>To deliver comprehensive, cost-effective, and innovative solutions to our clients while fostering economic empowerment and sustainable development within the communities we serve.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CORE VALUES ─── -->
+<section class="values-section" id="values">
+  <div class="values-header">
+    <span class="sec-tag reveal">What Drives Us</span>
+    <h2 class="values-title reveal reveal-delay-1">Core <span class="grad-text">Values</span></h2>
+    <p class="values-sub reveal reveal-delay-2">The principles that guide every project, every decision, and every partnership we build.</p>
+  </div>
+  <div class="values-grid">
+    <div class="val-card reveal">
+      <div class="val-num">01</div>
+      <div class="val-icon"><i class="fas fa-medal"></i></div>
+      <h3>Excellence</h3>
+      <p>We deliver superior quality in all services — no shortcuts, no compromises. Every job executed to the highest standard.</p>
+    </div>
+    <div class="val-card reveal reveal-delay-1">
+      <div class="val-num">02</div>
+      <div class="val-icon"><i class="fas fa-handshake"></i></div>
+      <h3>Integrity</h3>
+      <p>Upholding transparency and ethical practices in every client relationship, every contract, every day.</p>
+    </div>
+    <div class="val-card reveal reveal-delay-2">
+      <div class="val-num">03</div>
+      <div class="val-icon"><i class="fas fa-users"></i></div>
+      <h3>Collaboration</h3>
+      <p>Building lasting partnerships founded on mutual growth, shared expertise, and genuine trust.</p>
+    </div>
+    <div class="val-card reveal reveal-delay-3">
+      <div class="val-num">04</div>
+      <div class="val-icon"><i class="fas fa-microchip"></i></div>
+      <h3>Innovation</h3>
+      <p>Embracing new technologies and approaches to continuously improve efficiency and outcomes.</p>
+    </div>
+  </div>
+</section>
+
+<div class="grad-divider"></div>
+
+<!-- ─── FAMILY BANNER ─── -->
+<div style="padding: 60px 5vw;">
+  <div class="family-banner reveal">
+    <div class="family-banner-bg"></div>
+    <div class="family-banner-overlay"></div>
+    <div class="family-banner-inner">
+      <div>
+        <h2>Family-Owned<br><span style="background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Since 2014</span></h2>
+        <p>Built on trust, integrity, and a deep commitment to community. What started as a family venture has grown into one of South Africa's most dependable industrial service providers — without losing the personal touch that defines us.</p>
+      </div>
+      <div class="family-year">2014</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── EMPOWERMENT ─── -->
+<section class="emp-section" id="empowerment">
+  <div class="emp-inner">
+    <div class="emp-header reveal">
+      <span class="sec-tag">BBBEE &amp; Compliance</span>
+      <h2 class="emp-title" style="margin-top:16px;">Empowerment &amp; <span class="grad-text">Compliance</span></h2>
+    </div>
+    <div class="emp-grid">
+      <div class="emp-card green-card reveal">
+        <span class="emp-card-badge">51% ♀</span>
+        <i class="fas fa-fist-raised emp-card-icon"></i>
+        <h3>Empowerment Commitment</h3>
+        <p>As a 51% black female-owned business, we are dedicated to driving empowerment and transformation within South Africa. Our operations reflect our commitment to inclusivity, diversity, and community upliftment — demonstrating that true economic transformation is possible.</p>
+        <div class="emp-tags">
+          <span class="emp-tag">51% Female</span>
+          <span class="emp-tag">100% Black-Owned</span>
+          <span class="emp-tag">Community First</span>
+        </div>
+      </div>
+      <div class="emp-card blue-card reveal reveal-delay-1">
+        <span class="emp-card-badge">LEVEL 1</span>
+        <i class="fas fa-shield-alt emp-card-icon"></i>
+        <h3>Full Compliance</h3>
+        <p>CK & IJ Trading & Projects is fully compliant with all relevant South African industry standards and regulations, ensuring our services adhere to the highest quality and safety standards. Our Level 1 BBBEE status represents maximum procurement recognition for our partners.</p>
+        <div class="emp-tags">
+          <span class="emp-tag">BBBEE Level 1</span>
+          <span class="emp-tag">SA Regulated</span>
+          <span class="emp-tag">ISO Standards</span>
+        </div>
+      </div>
+    </div>
+    <!-- Reg Strip -->
+    <div class="reg-card reveal">
+      <div class="reg-item">
+        <div class="reg-label">Company Registration</div>
+        <div class="reg-val">2014/261680/07</div>
+      </div>
+      <div class="reg-divider"></div>
+      <div class="reg-item">
+        <div class="reg-label">VAT Number</div>
+        <div class="reg-val">4840274718</div>
+      </div>
+      <div class="reg-divider"></div>
+      <div class="reg-item">
+        <div class="reg-label">BBBEE Status</div>
+        <div class="reg-val">Level 1</div>
+      </div>
+      <div class="reg-divider"></div>
+      <div class="reg-item">
+        <div class="reg-label">Established</div>
+        <div class="reg-val">2014</div>
+      </div>
+      <div class="reg-divider"></div>
+      <div class="reg-item">
+        <div class="reg-label">Ownership</div>
+        <div class="reg-val">51% Female</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHY US ─── -->
+<section class="why-section" id="why">
+  <div class="why-inner">
+    <div class="why-header">
+      <span class="sec-tag reveal">The CK &amp; IJ Difference</span>
+      <h2 class="emp-title reveal reveal-delay-1" style="margin-top:16px;">Why Choose <span class="grad-text">Us</span></h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon"><i class="fas fa-clock"></i></div>
+        <h3>A Decade of Experience</h3>
+        <p>Over ten years of proven performance in equipment maintenance and mining services — delivering results when it matters most.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon"><i class="fas fa-user-tie"></i></div>
+        <h3>Qualified Professionals</h3>
+        <p>A skilled, experienced team dedicated to client satisfaction. Every specialist is trained, certified, and committed to excellence.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon"><i class="fas fa-hand-holding-heart"></i></div>
+        <h3>Empowerment &amp; Growth</h3>
+        <p>We don't just deliver services — we drive South African economic transformation and community development with every project.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT STRIP ─── -->
+<section class="contact-strip" id="contact">
+  <div class="contact-strip-inner">
+    <h2 class="reveal">Ready to <span class="grad-text">Partner</span><br>with Us?</h2>
+    <div class="contact-items">
+      <div class="contact-item reveal">
+        <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+        <div class="ci-text">
+          <h4>General &amp; Technical</h4>
+          <p>cassela@ckandij.co.za</p>
+          <span>063 367 2202</span>
+        </div>
+      </div>
+      <div class="contact-item reveal reveal-delay-1">
+        <div class="ci-icon"><i class="fas fa-file-invoice"></i></div>
+        <div class="ci-text">
+          <h4>Quotations &amp; Invoicing</h4>
+          <p>kristine@ckandij.co.za</p>
+          <span>078 110 8910</span>
+        </div>
+      </div>
+      <div class="contact-item reveal reveal-delay-2">
+        <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="ci-text">
+          <h4>Company Details</h4>
+          <p>Reg: 2014/261680/07</p>
+          <span>VAT: 4840274718</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="text-decoration:none;">
+          <div class="nav-logo-badge">CK<br>&IJ</div>
+          <div class="nav-logo-text">
+            <strong>CK & IJ TRADING</strong>
+            <span>Tyre · Mining · Projects</span>
+          </div>
+        </a>
+        <p>South Africa's trusted partner for tyre specialist and mining services. Family-owned since 2014, built on integrity and excellence.</p>
+        <div class="bbbee-pill" style="margin-top:20px;">
+          <div class="dot"></div>
+          BBBEE Level 1 Contributor
+        </div>
+      </div>
+      <div class="footer-links-col">
+        <h4>Services</h4>
+        <a href="index.html#services">Equipment Maintenance</a>
+        <a href="index.html#services">Tyre Maintenance</a>
+        <a href="index.html#services">Plant Maintenance</a>
+        <a href="index.html#services">Mining Services</a>
+        <a href="index.html#services">Pumps &amp; Valves</a>
+      </div>
+      <div class="footer-links-col">
+        <h4>Company</h4>
+        <a href="#story">Our Story</a>
+        <a href="#values">Core Values</a>
+        <a href="#empowerment">BBBEE Compliance</a>
+        <a href="#why">Why Choose Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-links-col">
+        <h4>Contact</h4>
+        <a href="mailto:cassela@ckandij.co.za">cassela@ckandij.co.za</a>
+        <a href="tel:0633672202">063 367 2202</a>
+        <a href="mailto:kristine@ckandij.co.za">kristine@ckandij.co.za</a>
+        <a href="tel:0781108910">078 110 8910</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 CK & IJ Trading & Projects. All rights reserved. · Partnering with you for excellence and growth.</p>
+      <div class="reg">
+        <span>Reg: 2014/261680/07</span>
+        <span>VAT: 4840274718</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAV scroll ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── Hamburger ──
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMobile() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+
+// ── Reveal on scroll ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ── Hero parallax ──
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', () => {
+  if (heroBg && window.scrollY < window.innerHeight) {
+    heroBg.style.transform = `scale(1.06) translateY(${window.scrollY * 0.28}px)`;
+  }
+});
+
+// ── 3D tilt on cards ──
+document.querySelectorAll('.vm-card, .val-card, .emp-card, .why-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(900px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+</script>
+</body>
+</html>
