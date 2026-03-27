@@ -221,7 +221,7 @@ nav.scrolled {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=1920');
+  background-image: url('./assets/ckhero.jpeg');
   background-size: cover;
   background-position: center 40%;
   transform: scale(1.08);
@@ -509,7 +509,7 @@ section { position: relative; }
   top: 0; left: 0;
   width: 72%;
   height: 82%;
-  background-image: url('https://images.pexels.com/photos/1036936/pexels-photo-1036936.jpeg?auto=compress&cs=tinysrgb&w=800');
+  background-image: url('./assets/story.jpeg');
   background-size: cover;
   background-position: center;
   border-radius: 16px;
@@ -529,7 +529,7 @@ section { position: relative; }
   bottom: 0; right: 0;
   width: 55%;
   height: 55%;
-  background-image: url('https://images.pexels.com/photos/163590/construction-site-tires-construction-machinery-163590.jpeg?auto=compress&cs=tinysrgb&w=800');
+  background-image: url('./assets/story2.jpeg');
   background-size: cover;
   background-position: center;
   border-radius: 16px;
@@ -1284,10 +1284,9 @@ footer {
 </head>
 <body>
 
-<!-- ─── NAV ─── -->
 <nav id="nav">
   <a href="#" class="nav-logo">
-    <div class="nav-logo-badge">CK<br>&IJ</div>
+    <div class="nav-logo-badge"><img src="assets/CKIJlogo.png" style="width: 150%; height: auto;" alt="CK & IJ Trading Logo"></div>
     <div class="nav-logo-text">
       <strong>CK & IJ TRADING</strong>
       <span>Tyre · Mining · Projects</span>
@@ -1309,7 +1308,6 @@ footer {
   <a href="contact.html" onclick="closeMobile()">Contact</a>
 </div>
 
-<!-- ─── HERO ─── -->
 <section class="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
@@ -1344,7 +1342,6 @@ footer {
   </div>
 </section>
 
-<!-- ─── TICKER ─── -->
 <div class="ticker-wrap">
   <div class="ticker">
     <span><i class="fas fa-cog"></i>Equipment Maintenance</span>
@@ -1413,7 +1410,6 @@ footer {
 
 <div class="grad-divider"></div>
 
-<!-- ─── VALUES ─── -->
 <section class="values-section" id="values">
   <div class="sec-header reveal">
     <span class="sec-tag">What Drives Us</span>
@@ -1448,7 +1444,6 @@ footer {
   </div>
 </section>
 
-<!-- ─── SERVICES ─── -->
 <section class="services-section" id="services">
   <div class="services-intro">
     <div class="left reveal">
@@ -1461,9 +1456,8 @@ footer {
   </div>
 
   <div class="services-layout reveal">
-    <!-- Card 1: Equipment Maintenance -->
     <div class="srv-card">
-      <div class="srv-bg" style="background-image: url('https://images.pexels.com/photos/11134694/pexels-photo-11134694.jpeg?auto=compress&cs=tinysrgb&w=1200');"></div>
+      <div class="srv-bg" style="background-image: url('./assets/maintenance.jpeg');"></div>
       <div class="srv-overlay"></div>
       <div class="srv-arrow"><i class="fas fa-arrow-right"></i></div>
       <div class="srv-inner">
@@ -1481,7 +1475,7 @@ footer {
 
     <!-- Card 2: Mining (tall) -->
     <div class="srv-card">
-      <div class="srv-bg" style="background-image: url('https://images.pexels.com/photos/25727947/pexels-photo-25727947/free-photo-of-mining-excavator-loading-dump-truck.jpeg?auto=compress&cs=tinysrgb&w=1200');"></div>
+      <div class="srv-bg" style="background-image: url('./assets/mineserv.jpeg');"></div>
       <div class="srv-overlay"></div>
       <div class="srv-arrow"><i class="fas fa-arrow-right"></i></div>
       <div class="srv-inner">
@@ -1498,11 +1492,9 @@ footer {
       </div>
     </div>
 
-    <!-- Card 3: Tyre + Plant (side by side) -->
     <div class="srv-card" style="display:grid; grid-template-columns:1fr 1fr; border-radius:20px; overflow:hidden;">
-      <!-- Tyre -->
       <div style="position:relative; overflow:hidden; cursor:pointer;">
-        <div class="srv-bg" style="background-image: url('https://images.pexels.com/photos/163590/construction-site-tires-construction-machinery-163590.jpeg?auto=compress&cs=tinysrgb&w=900');"></div>
+        <div class="srv-bg" style="background-image: url('./assets/tyremain.jpeg');"></div>
         <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(192,24,30,0.88),rgba(8,13,20,0.4));transition:opacity .4s;"></div>
         <div class="srv-inner" style="padding:28px;">
           <div class="srv-tag">Tyre Specialist</div>
@@ -1511,9 +1503,8 @@ footer {
           <p class="srv-desc" style="font-size:.82rem;">Specialist heavy-duty tyre maintenance for mining and construction fleets.</p>
         </div>
       </div>
-      <!-- Plant -->
       <div style="position:relative; overflow:hidden; cursor:pointer;">
-        <div class="srv-bg" style="background-image: url('https://images.pexels.com/photos/2361/industry-sky-industrial-factory.jpg?auto=compress&cs=tinysrgb&w=900');"></div>
+        <div class="srv-bg" style="background-image: url('./assets/plantmain.jpeg');"></div>
         <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,45,107,0.88),rgba(8,13,20,0.4));transition:opacity .4s;"></div>
         <div class="srv-inner" style="padding:28px;">
           <div class="srv-tag">Plant Ops</div>
@@ -1525,10 +1516,9 @@ footer {
     </div>
   </div>
 
-  <!-- Small cards row -->
   <div class="srv-small-grid">
     <div class="srv-sm reveal">
-      <div class="srv-sm-bg" style="background-image: url('https://images.pexels.com/photos/414837/pexels-photo-414837.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+      <div class="srv-sm-bg" style="background-image: url('./assets/pump.jpeg');"></div>
       <div class="srv-sm-overlay"></div>
       <div class="srv-sm-inner">
         <i class="fas fa-water"></i>
@@ -1537,7 +1527,7 @@ footer {
       </div>
     </div>
     <div class="srv-sm reveal reveal-delay-1">
-      <div class="srv-sm-bg" style="background-image: url('https://images.pexels.com/photos/11501389/pexels-photo-11501389.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+      <div class="srv-sm-bg" style="background-image: url('./assets/brake.jpeg');"></div>
       <div class="srv-sm-overlay"></div>
       <div class="srv-sm-inner">
         <i class="fas fa-car-crash"></i>
@@ -1546,7 +1536,7 @@ footer {
       </div>
     </div>
     <div class="srv-sm reveal reveal-delay-2">
-      <div class="srv-sm-bg" style="background-image: url('https://images.pexels.com/photos/158398/construction-site-trucks-excavators-construction-machinery-158398.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+      <div class="srv-sm-bg" style="background-image: url('./assets/bulk.jpeg');"></div>
       <div class="srv-sm-overlay"></div>
       <div class="srv-sm-inner">
         <i class="fas fa-mountain"></i>
@@ -1559,7 +1549,6 @@ footer {
 
 <div class="grad-divider"></div>
 
-<!-- ─── COMPLIANCE ─── -->
 <section class="compliance-section" id="compliance">
   <div class="sec-header reveal">
     <span class="sec-tag">Trust &amp; Compliance</span>
@@ -1589,7 +1578,6 @@ footer {
   </div>
 </section>
 
-<!-- ─── CONTACT ─── -->
 <section class="contact-section" id="contact">
   <div class="contact-inner">
     <div class="contact-left">
@@ -1671,7 +1659,6 @@ footer {
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -1724,13 +1711,11 @@ footer {
 </footer>
 
 <script>
-// ── NAV scroll ──
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 });
 
-// ── Hamburger ──
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
@@ -1742,7 +1727,6 @@ function closeMobile() {
   mobileMenu.classList.remove('open');
 }
 
-// ── Reveal on scroll ──
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1751,7 +1735,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 reveals.forEach(el => observer.observe(el));
 
-// ── Hero parallax ──
 const heroBg = document.getElementById('heroBg');
 window.addEventListener('scroll', () => {
   const scrolled = window.scrollY;
@@ -1760,7 +1743,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// ── Form submit ──
 function handleSubmit(btn) {
   const orig = btn.innerHTML;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>  Sending...';
@@ -1776,7 +1758,6 @@ function handleSubmit(btn) {
   }, 1600);
 }
 
-// ── Hover tilt on service cards ──
 document.querySelectorAll('.srv-card, .val-card, .comp-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const rect = card.getBoundingClientRect();
