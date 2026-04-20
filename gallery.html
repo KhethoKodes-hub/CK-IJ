@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery | CK & IJ Trading & Projects</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --blue:   #0f2d6b;
+  --blue2:  #1a4faa;
+  --red:    #c0181e;
+  --red2:   #e8232a;
+  --green:  #0a5c3a;
+  --green2: #0e7a4e;
+  --white:  #f4f4f0;
+  --dark:   #080d14;
+  --grad:   linear-gradient(135deg, var(--blue) 0%, var(--red) 48%, var(--green) 100%);
+  --grad2:  linear-gradient(90deg, var(--blue) 0%, var(--red2) 50%, var(--green2) 100%);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--dark);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ─── CUSTOM CURSOR ─── */
+#cursor {
+  position: fixed;
+  width: 12px; height: 12px;
+  background: var(--red2);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: difference;
+}
+#cursor-ring {
+  position: fixed;
+  width: 44px; height: 44px;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.35s, height 0.35s, opacity 0.3s;
+}
+body.cursor-hover #cursor { width: 50px; height: 50px; background: rgba(192,24,30,0.15); }
+body.cursor-hover #cursor-ring { width: 80px; height: 80px; opacity: 0; }
+body.cursor-view #cursor::after {
+  content: 'VIEW';
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .55rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--grad); }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 200;
+  padding: 0 5vw; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(8,13,20,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: all .4s;
+}
+nav.scrolled { height: 60px; background: rgba(8,13,20,0.97); border-bottom-color: var(--red); }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-badge {
+  width: 42px; height: 42px;
+  background: var(--grad); border-radius: 10px;
+  display: grid; place-items: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: 1rem;
+  color: #fff; transition: transform .3s;
+  overflow: hidden;
+}
+.nav-logo-badge img { width: 90px; height: auto; }
+.nav-logo:hover .nav-logo-badge { transform: rotate(-8deg) scale(1.08); }
+.nav-links { display: flex; gap: 2px; list-style: none; }
+.nav-links a {
+  display: block; padding: 6px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(244,244,240,0.65); text-decoration: none;
+  position: relative; transition: color .3s;
+}
+.nav-links a::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 50%; right: 50%;
+  height: 2px; background: var(--grad2);
+  transition: left .3s, right .3s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after, .nav-links a.active::after { left: 0; right: 0; }
+.nav-links a.active { color: #fff; }
+.nav-cta {
+  font-family: 'Barlow Condensed', sans-serif; font-size: .8rem;
+  font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  padding: 9px 22px; background: var(--red); color: #fff;
+  border: none; border-radius: 4px; cursor: none;
+  text-decoration: none; transition: all .3s;
+}
+.nav-cta:hover { background: var(--red2); transform: translateY(-2px); }
+
+/* ─── HERO VIDEO ─── */
+.gallery-hero {
+  position: relative;
+  height: 100vh; min-height: 700px;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.hero-video-wrap {
+  position: absolute; inset: 0;
+  overflow: hidden;
+}
+.hero-video-wrap video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+}
+/* fallback bg for when no video */
+.hero-video-wrap .video-fallback {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0f2d6b 0%, #1a1a2e 40%, #0a5c3a 100%);
+}
+.hero-video-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8,13,20,0.25) 0%,
+    rgba(8,13,20,0.55) 60%,
+    rgba(8,13,20,0.92) 100%
+  );
+}
+/* scanline effect */
+.hero-scanlines {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+}
+
+.gallery-hero-content {
+  position: relative; z-index: 2;
+  padding: 0 5vw; width: 100%; max-width: 1400px; margin: 0 auto;
+  padding-top: 72px;
+}
+/* initial hidden */
+.gallery-hero-content .hero-badge-g,
+.gallery-hero-content .hero-title-g,
+.gallery-hero-content .hero-sub-g,
+.gallery-hero-content .hero-filter-g {
+  opacity: 0;
+  transform: translateX(-70px);
+  filter: blur(8px);
+}
+body.hero-loaded .gallery-hero-content .hero-badge-g {
+  animation: gSlideIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s both;
+}
+body.hero-loaded .gallery-hero-content .hero-title-g {
+  animation: gSlideIn 1.1s cubic-bezier(0.22,1,0.36,1) 0.75s both;
+}
+body.hero-loaded .gallery-hero-content .hero-sub-g {
+  animation: gSlideIn 1s cubic-bezier(0.22,1,0.36,1) 1s both;
+}
+body.hero-loaded .gallery-hero-content .hero-filter-g {
+  animation: gSlideIn 1s cubic-bezier(0.22,1,0.36,1) 1.25s both;
+}
+
+@keyframes gSlideIn {
+  from { opacity:0; transform: translateX(-70px); filter: blur(8px); }
+  to   { opacity:1; transform: translateX(0);     filter: blur(0);   }
+}
+
+.hero-badge-g {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px); padding: 7px 18px; border-radius: 100px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: .8rem;
+  font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: #fff; margin-bottom: 24px;
+}
+.hero-badge-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red2); box-shadow: 0 0 8px var(--red2);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{box-shadow:0 0 8px var(--red2)} 50%{box-shadow:0 0 22px var(--red2)} }
+
+.hero-title-g {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 11vw, 10rem);
+  line-height: .9; letter-spacing: 2px; margin-bottom: 20px;
+}
+.hero-title-g .line-a { display: block; color: #fff; }
+.hero-title-g .line-b {
+  display: block;
+  background: var(--grad2);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub-g {
+  font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.7);
+  max-width: 500px; line-height: 1.7; margin-bottom: 40px;
+}
+
+/* Filter tabs */
+.filter-tabs {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.filter-tab {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  padding: 10px 22px; border-radius: 100px; border: 1.5px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6);
+  cursor: none; transition: all .35s; backdrop-filter: blur(10px);
+}
+.filter-tab:hover { border-color: rgba(255,255,255,0.5); color: #fff; background: rgba(255,255,255,0.1); }
+.filter-tab.active {
+  background: var(--red); border-color: var(--red); color: #fff;
+  box-shadow: 0 0 24px rgba(192,24,30,0.4);
+}
+
+/* ─── HERO SCROLL INDICATOR ─── */
+.hero-scroll-ind {
+  position: absolute; bottom: 40px; right: 5vw; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: 0; animation: gSlideIn 1s ease 1.8s both;
+}
+.scroll-count {
+  font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; line-height: 1;
+  background: var(--grad2); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+}
+.scroll-label {
+  font-family: 'Barlow Condensed', sans-serif; font-size: .65rem;
+  letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.4);
+}
+
+/* ─── GALLERY SECTION ─── */
+.gallery-section {
+  padding: 100px 4vw 140px;
+  position: relative;
+}
+
+/* Background ambient glows */
+.gallery-section::before {
+  content: '';
+  position: fixed; top: 30%; left: -20%; width: 60vw; height: 60vh;
+  background: radial-gradient(ellipse, rgba(15,45,107,0.12) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+  animation: ambientMove 12s ease-in-out infinite alternate;
+}
+.gallery-section::after {
+  content: '';
+  position: fixed; bottom: 10%; right: -10%; width: 50vw; height: 50vh;
+  background: radial-gradient(ellipse, rgba(192,24,30,0.08) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+@keyframes ambientMove {
+  from { transform: translate(0,0); }
+  to   { transform: translate(5vw, -5vh); }
+}
+
+/* ─── MASONRY-STYLE CREATIVE GRID ─── */
+.gallery-grid {
+  position: relative; z-index: 1;
+  max-width: 1400px; margin: 0 auto;
+  columns: 3; column-gap: 16px;
+}
+
+@media (max-width: 1024px) { .gallery-grid { columns: 2; } }
+@media (max-width: 600px)  { .gallery-grid { columns: 1; } }
+
+/* ─── GALLERY ITEM ─── */
+.g-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: none;
+  background: #111;
+
+  /* Stagger reveal on load */
+  opacity: 0;
+  transform: translateY(50px) scale(0.95);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.g-item.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Different aspect ratios for masonry feel */
+.g-item[data-size="tall"]   { aspect-ratio: 3/4; }
+.g-item[data-size="wide"]   { aspect-ratio: 16/9; }
+.g-item[data-size="square"] { aspect-ratio: 1; }
+.g-item[data-size="short"]  { aspect-ratio: 4/3; }
+.g-item[data-size="cinema"] { aspect-ratio: 21/9; break-inside: avoid; column-span: all; margin: 20px 0; border-radius: 24px; }
+
+/* ─── ITEM MEDIA ─── */
+.g-media {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: block;
+}
+.g-item:hover .g-media { transform: scale(1.08); }
+
+/* VIDEO badge */
+.g-video-badge {
+  position: absolute; top: 16px; left: 16px; z-index: 4;
+  background: rgba(192,24,30,0.9); color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px;
+  display: flex; align-items: center; gap: 6px;
+  backdrop-filter: blur(10px);
+}
+.g-video-badge .blink {
+  width: 6px; height: 6px; border-radius: 50%; background: #fff;
+  animation: blink 1.2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ─── OVERLAY SYSTEM ─── */
+.g-overlay {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 28px;
+  background: linear-gradient(0deg, rgba(8,13,20,0.95) 0%, rgba(8,13,20,0.3) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.g-item:hover .g-overlay { opacity: 1; }
+
+.g-overlay-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--red2); margin-bottom: 8px;
+  transform: translateY(12px); opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1) 0.05s, opacity 0.4s ease 0.05s;
+}
+.g-overlay-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem); letter-spacing: 1px; line-height: 1;
+  margin-bottom: 10px;
+  transform: translateY(16px); opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s, opacity 0.4s ease 0.1s;
+}
+.g-overlay-desc {
+  font-size: .82rem; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.5;
+  transform: translateY(20px); opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1) 0.15s, opacity 0.4s ease 0.15s;
+}
+.g-item:hover .g-overlay-tag,
+.g-item:hover .g-overlay-title,
+.g-item:hover .g-overlay-desc {
+  transform: translateY(0); opacity: 1;
+}
+
+.g-expand-btn {
+  position: absolute; top: 20px; right: 20px; z-index: 4;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px); color: #fff; font-size: .85rem;
+  display: grid; place-items: center;
+  opacity: 0; transform: scale(0.7) rotate(90deg);
+  transition: opacity 0.35s ease 0.1s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.1s,
+              background 0.25s;
+}
+.g-item:hover .g-expand-btn {
+  opacity: 1; transform: scale(1) rotate(0deg);
+}
+.g-expand-btn:hover { background: var(--red); }
+
+/* ─── MAGNETIC TILT on hover (JS driven) ─── */
+.g-item {
+  transform-style: preserve-3d;
+}
+
+/* ─── SPECIAL: FEATURED STRIP ─── */
+.featured-strip {
+  max-width: 1400px; margin: 0 auto 20px;
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 480px;
+  gap: 16px;
+}
+.featured-strip .g-item { margin: 0; border-radius: 20px; }
+.featured-strip .g-item:first-child { grid-row: 1; }
+
+/* ─── SECTION LABEL BETWEEN ROWS ─── */
+.gallery-section-label {
+  max-width: 1400px; margin: 60px auto 24px;
+  position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 20px;
+}
+.gsl-line { flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+.gsl-text {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 5px;
+  text-transform: uppercase; color: rgba(255,255,255,0.25);
+  white-space: nowrap;
+}
+.gsl-count {
+  font-family: 'Barlow Condensed', sans-serif; font-size: .7rem; font-weight: 700;
+  letter-spacing: 3px; color: var(--red2); background: rgba(192,24,30,0.12);
+  padding: 4px 12px; border-radius: 100px; border: 1px solid rgba(192,24,30,0.25);
+}
+
+/* ─── LIGHTBOX ─── */
+#lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(8,13,20,0.0);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: background 0.5s ease, opacity 0.4s ease;
+  backdrop-filter: blur(0px);
+}
+#lightbox.active {
+  opacity: 1; pointer-events: all;
+  background: rgba(8,13,20,0.97);
+  backdrop-filter: blur(30px);
+}
+
+.lb-content {
+  position: relative;
+  max-width: 90vw; max-height: 88vh;
+  display: flex; align-items: center; justify-content: center;
+  transform: scale(0.85) translateY(30px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s,
+              opacity 0.4s ease 0.1s;
+}
+#lightbox.active .lb-content {
+  transform: scale(1) translateY(0); opacity: 1;
+}
+.lb-content img, .lb-content video {
+  max-width: 90vw; max-height: 85vh;
+  border-radius: 12px;
+  object-fit: contain;
+  box-shadow: 0 60px 120px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* Decorative corners in lightbox */
+.lb-corner {
+  position: absolute;
+  width: 30px; height: 30px;
+  border-color: var(--red2);
+  border-style: solid;
+  opacity: 0.6;
+}
+.lb-corner.tl { top: -12px; left: -12px; border-width: 2px 0 0 2px; }
+.lb-corner.tr { top: -12px; right: -12px; border-width: 2px 2px 0 0; }
+.lb-corner.bl { bottom: -12px; left: -12px; border-width: 0 0 2px 2px; }
+.lb-corner.br { bottom: -12px; right: -12px; border-width: 0 2px 2px 0; }
+
+.lb-close {
+  position: fixed; top: 28px; right: 32px; z-index: 1001;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  color: #fff; font-size: 1.1rem; cursor: none;
+  display: grid; place-items: center;
+  transition: all .3s; backdrop-filter: blur(10px);
+  transform: rotate(0deg) scale(0.8); opacity: 0;
+}
+#lightbox.active .lb-close {
+  transform: rotate(0deg) scale(1); opacity: 1;
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.3s, opacity 0.3s ease 0.3s, background 0.25s;
+}
+.lb-close:hover { background: var(--red); transform: rotate(90deg) scale(1.1) !important; }
+
+.lb-nav {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  z-index: 1001; width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  color: #fff; font-size: 1rem; cursor: none;
+  display: grid; place-items: center;
+  transition: all .3s; backdrop-filter: blur(10px);
+}
+.lb-nav.prev { left: 24px; }
+.lb-nav.next { right: 24px; }
+.lb-nav:hover { background: var(--red2); transform: translateY(-50%) scale(1.1); }
+
+.lb-info {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+  z-index: 1001; text-align: center;
+  opacity: 0; transition: opacity 0.4s ease 0.4s;
+}
+#lightbox.active .lb-info { opacity: 1; }
+.lb-info-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px;
+}
+.lb-info-tag {
+  font-family: 'Barlow Condensed', sans-serif; font-size: .72rem;
+  font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--red2); margin-top: 4px;
+}
+.lb-counter {
+  font-family: 'Barlow Condensed', sans-serif; font-size: .7rem;
+  letter-spacing: 3px; color: rgba(255,255,255,0.3); margin-top: 8px;
+}
+
+/* Filmstrip bar at bottom of lightbox */
+.lb-filmstrip {
+  position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 1001;
+  max-width: 80vw; overflow-x: auto;
+  scrollbar-width: none;
+  opacity: 0; transition: opacity 0.4s ease 0.5s;
+}
+#lightbox.active .lb-filmstrip { opacity: 1; }
+.lb-filmstrip::-webkit-scrollbar { display: none; }
+.lb-thumb {
+  width: 52px; height: 36px; border-radius: 6px;
+  overflow: hidden; flex-shrink: 0; cursor: none;
+  border: 2px solid transparent;
+  transition: border-color .25s, transform .25s;
+  opacity: 0.5;
+}
+.lb-thumb.active { border-color: var(--red2); opacity: 1; transform: scale(1.15); }
+.lb-thumb img, .lb-thumb video {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─── */
+.noise-overlay {
+  position: fixed; inset: 0; z-index: 9990; pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px;
+}
+
+/* ─── PROGRESS BAR ─── */
+#progress-bar {
+  position: fixed; top: 0; left: 0; z-index: 1000;
+  height: 3px; background: var(--grad2); width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* ─── BACK TO TOP ─── */
+#btt {
+  position: fixed; bottom: 40px; right: 40px; z-index: 500;
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--red); color: #fff; font-size: .9rem;
+  display: grid; place-items: center; cursor: none;
+  opacity: 0; transform: translateY(20px) scale(0.8);
+  transition: all .4s cubic-bezier(0.34,1.56,0.64,1);
+  border: none; box-shadow: 0 8px 24px rgba(192,24,30,0.4);
+}
+#btt.visible { opacity: 1; transform: translateY(0) scale(1); }
+#btt:hover { background: var(--grad); transform: translateY(-4px) scale(1.1); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: rgba(0,0,0,0.6); border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 40px 5vw;
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-inner p { font-size: .8rem; font-weight: 300; color: rgba(255,255,255,0.3); }
+.bbbee-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px; border-radius: 100px;
+  background: rgba(10,92,58,0.25); border: 1px solid rgba(14,122,78,0.4);
+  font-family: 'Barlow Condensed', sans-serif; font-size: .75rem;
+  font-weight: 700; letter-spacing: 2px; color: #4dc490;
+}
+.bbbee-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green2); }
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  .featured-strip { grid-template-columns: 1fr; grid-template-rows: 320px 240px 240px; }
+  .gallery-grid { columns: 1; }
+  body { cursor: default; }
+  #cursor, #cursor-ring { display: none; }
+  .filter-tab { font-size: .72rem; padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+
+<!-- Noise -->
+<div class="noise-overlay"></div>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-badge">
+      <img src="assets/ckjlogo.png" alt="CK & IJ Logo">
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="gallery-hero">
+  <div class="hero-video-wrap">
+    <!--
+      Place your video file in assets/hero-video.mp4
+      If no video, the gradient fallback shows automatically.
+    -->
+    <video autoplay muted loop playsinline poster="assets/ckhero.jpeg" id="heroVideo">
+      <source src="assets/hero-video.mp4" type="video/mp4">
+    </video>
+    <div class="video-fallback"></div>
+  </div>
+  <div class="hero-video-overlay"></div>
+  <div class="hero-scanlines"></div>
+
+  <div class="gallery-hero-content">
+    <div class="hero-badge-g">
+      <div class="hero-badge-dot"></div>
+      CK & IJ Trading · Visual Archive
+    </div>
+    <h1 class="hero-title-g">
+      <span class="line-a">Our Work</span>
+      <span class="line-b">In The Field</span>
+    </h1>
+    <p class="hero-sub-g">A raw, unfiltered look at a decade of industrial excellence — from deep-pit mining operations to precision tyre maintenance across South Africa.</p>
+    <div class="filter-tabs hero-filter-g" id="filterTabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="mining">Mining</button>
+      <button class="filter-tab" data-filter="tyres">Tyres</button>
+      <button class="filter-tab" data-filter="maintenance">Maintenance</button>
+      <button class="filter-tab" data-filter="team">Team</button>
+      <button class="filter-tab" data-filter="video">Video</button>
+    </div>
+  </div>
+
+  <div class="hero-scroll-ind">
+    <div class="scroll-count" id="totalCount">00</div>
+    <div class="scroll-label">Items Below</div>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<section class="gallery-section">
+
+  <!-- FEATURED ROW -->
+  <div class="gallery-section-label">
+    <div class="gsl-line"></div>
+    <span class="gsl-text">Featured</span>
+    <span class="gsl-count">Highlights</span>
+    <div class="gsl-line"></div>
+  </div>
+
+  <div class="featured-strip">
+    <!-- Featured large image -->
+    <div class="g-item" data-size="square" data-cat="mining" data-title="Open-Pit Operations" data-desc="Large-scale load and haul operations at active mine sites across South Africa." style="aspect-ratio:auto; height:480px; border-radius:20px;">
+      <img class="g-media" src="assets/mineserv.jpeg" alt="Mining Operations" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Mining Operations</div>
+        <div class="g-overlay-title">Open-Pit Excellence</div>
+        <div class="g-overlay-desc">Large-scale load and haul — safe, compliant, results-driven.</div>
+      </div>
+      <button class="g-expand-btn" aria-label="Expand"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <!-- Featured tyre -->
+    <div class="g-item" data-size="short" data-cat="tyres" data-title="Heavy-Duty Tyre Service" data-desc="Specialist maintenance for mining fleet tyres, keeping operations moving." style="height:232px; border-radius:20px;">
+      <img class="g-media" src="assets/tmaintenance.jpeg" alt="Tyre Maintenance" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Tyre Specialist</div>
+        <div class="g-overlay-title">Fleet Tyre Care</div>
+        <div class="g-overlay-desc">Zero downtime through expert tyre management.</div>
+      </div>
+      <button class="g-expand-btn" aria-label="Expand"><i class="fas fa-expand-alt"></i></button>
+    </div>
+    <!-- Featured maintenance -->
+    <div class="g-item" data-size="short" data-cat="maintenance" data-title="Plant Maintenance" data-desc="Optimizing productivity and extending the lifespan of industrial equipment." style="height:232px; border-radius:20px; margin-top:auto;">
+      <img class="g-media" src="assets/plantmain.jpeg" alt="Plant Maintenance" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Plant Ops</div>
+        <div class="g-overlay-title">Industrial Precision</div>
+        <div class="g-overlay-desc">World-class plant maintenance solutions.</div>
+      </div>
+      <button class="g-expand-btn" aria-label="Expand"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <!-- Video card -->
+    <div class="g-item" data-size="short" data-cat="video" data-title="On-Site Operations" data-desc="Watch our team in action at one of our active mine sites." style="height:232px; border-radius:20px;" data-type="video">
+      <video class="g-media" src="assets/gallery-video1.mp4" muted loop autoplay playsinline poster="assets/loadhaul.jpeg"></video>
+      <div class="g-video-badge"><div class="blink"></div> VIDEO</div>
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Video</div>
+        <div class="g-overlay-title">In The Field</div>
+        <div class="g-overlay-desc">Live documentation of our operations.</div>
+      </div>
+      <button class="g-expand-btn" aria-label="Expand"><i class="fas fa-play"></i></button>
+    </div>
+    <!-- Load & Haul -->
+    <div class="g-item" data-size="short" data-cat="mining" data-title="Load & Haul" data-desc="Efficient bulk material transport across active mine sites." style="height:232px; border-radius:20px;">
+      <img class="g-media" src="assets/loadhaul.jpeg" alt="Load Haul" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Mining</div>
+        <div class="g-overlay-title">Load & Haul</div>
+        <div class="g-overlay-desc">Bulk material transport excellence.</div>
+      </div>
+      <button class="g-expand-btn" aria-label="Expand"><i class="fas fa-expand-alt"></i></button>
+    </div>
+  </div>
+
+  <!-- MASONRY GRID -->
+  <div class="gallery-section-label">
+    <div class="gsl-line"></div>
+    <span class="gsl-text">Full Archive</span>
+    <span class="gsl-count" id="visibleCount">–</span>
+    <div class="gsl-line"></div>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid">
+
+    <div class="g-item" data-size="tall" data-cat="mining" data-title="Crusher Operations" data-desc="State-of-the-art crushing and screening systems delivering consistent output.">
+      <img class="g-media" src="assets/mineserv.jpeg" alt="Mining" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Mining</div>
+        <div class="g-overlay-title">Crusher Ops</div>
+        <div class="g-overlay-desc">Crushing & screening delivering consistent output.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="short" data-cat="tyres" data-title="Tyre Bay" data-desc="Fully equipped tyre bay servicing heavy mining and construction fleet.">
+      <img class="g-media" src="assets/tmaintenance.jpeg" alt="Tyres" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Tyres</div>
+        <div class="g-overlay-title">Tyre Bay</div>
+        <div class="g-overlay-desc">Servicing heavy mining & construction fleet.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="wide" data-cat="maintenance" data-title="Equipment Servicing" data-desc="Preventive and corrective maintenance keeping your fleet at peak performance.">
+      <img class="g-media" src="assets/maintain.jpeg" alt="Maintenance" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Maintenance</div>
+        <div class="g-overlay-title">Equipment Servicing</div>
+        <div class="g-overlay-desc">Preventive & corrective — zero compromise.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="square" data-cat="mining" data-title="Drill & Blast Site" data-desc="Operational readiness at every phase of the extraction process.">
+      <img class="g-media" src="assets/loadhaul.jpeg" alt="Mining" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Mining</div>
+        <div class="g-overlay-title">Site Readiness</div>
+        <div class="g-overlay-desc">Every phase of extraction covered.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="tall" data-cat="maintenance" data-title="Pump Station" data-desc="Supply and service of industrial pumps and valves across mine sites.">
+      <img class="g-media" src="assets/pump.jpeg" alt="Pumps" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Maintenance</div>
+        <div class="g-overlay-title">Pump Station</div>
+        <div class="g-overlay-desc">Industrial pumps & valves — supplied & serviced.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="short" data-cat="maintenance" data-title="Dynamic Brake Test" data-desc="Comprehensive braking system tests ensuring maximum safety across all machinery." data-type="video">
+      <video class="g-media" src="assets/gallery-video2.mp4" muted loop autoplay playsinline poster="assets/braketest.jpeg"></video>
+      <div class="g-video-badge"><div class="blink"></div> VIDEO</div>
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Safety</div>
+        <div class="g-overlay-title">Brake Testing</div>
+        <div class="g-overlay-desc">Max safety. Zero shortcuts.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-play"></i></button>
+    </div>
+
+    <div class="g-item" data-size="wide" data-cat="mining" data-title="Plant Overview" data-desc="Bird's eye view of our operational plant — optimized for throughput.">
+      <img class="g-media" src="assets/plantmain.jpeg" alt="Plant" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Plant Ops</div>
+        <div class="g-overlay-title">Plant Overview</div>
+        <div class="g-overlay-desc">Optimized for maximum throughput.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="square" data-cat="tyres" data-title="OTR Tyre Fitting" data-desc="Off-the-road tyre fitting for massive mining trucks and earthmovers.">
+      <img class="g-media" src="assets/tmaintenance.jpeg" alt="OTR Tyres" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Tyres</div>
+        <div class="g-overlay-title">OTR Fitting</div>
+        <div class="g-overlay-desc">Off-the-road. Massive. Precise.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="tall" data-cat="team" data-title="Our People" data-desc="The skilled professionals who make every operation a success.">
+      <img class="g-media" src="assets/story.jpeg" alt="Team" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Team</div>
+        <div class="g-overlay-title">Our People</div>
+        <div class="g-overlay-desc">The engine behind every success.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="short" data-cat="mining" data-title="Haul Road" data-desc="Maintaining haul road integrity for maximum fleet safety and efficiency.">
+      <img class="g-media" src="assets/mineserv.jpeg" alt="Haul Road" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Mining</div>
+        <div class="g-overlay-title">Haul Roads</div>
+        <div class="g-overlay-desc">Safe roads, safe operations.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="wide" data-cat="team" data-title="Family Built" data-desc="A family business built on trust, integrity and the drive to deliver excellence.">
+      <img class="g-media" src="assets/story2.jpeg" alt="Team" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">About Us</div>
+        <div class="g-overlay-title">Family Built</div>
+        <div class="g-overlay-desc">Trust. Integrity. Excellence. Since 2014.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="tall" data-cat="maintenance" data-title="Full Service Bay" data-desc="State-of-the-art service bays equipped to handle any industrial challenge.">
+      <img class="g-media" src="assets/maintain.jpeg" alt="Service Bay" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Maintenance</div>
+        <div class="g-overlay-title">Service Bay</div>
+        <div class="g-overlay-desc">Equipped for any challenge.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+    <div class="g-item" data-size="square" data-cat="tyres" data-title="Tyre Pressure Control" data-desc="Advanced tyre pressure monitoring and management across the fleet.">
+      <img class="g-media" src="assets/tmaintenance.jpeg" alt="Tyre" loading="lazy">
+      <div class="g-overlay">
+        <div class="g-overlay-tag">Tyres</div>
+        <div class="g-overlay-title">Pressure Control</div>
+        <div class="g-overlay-desc">Advanced monitoring. Zero blowouts.</div>
+      </div>
+      <button class="g-expand-btn"><i class="fas fa-expand-alt"></i></button>
+    </div>
+
+  </div><!-- end gallery-grid -->
+
+</section>
+
+<!-- ─── LIGHTBOX ─── -->
+<div id="lightbox">
+  <div class="lb-content" id="lbContent">
+    <div class="lb-corner tl"></div>
+    <div class="lb-corner tr"></div>
+    <div class="lb-corner bl"></div>
+    <div class="lb-corner br"></div>
+    <!-- media injected by JS -->
+  </div>
+  <button class="lb-close" id="lbClose"><i class="fas fa-times"></i></button>
+  <button class="lb-nav prev" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+  <button class="lb-nav next" id="lbNext"><i class="fas fa-chevron-right"></i></button>
+  <div class="lb-info">
+    <div class="lb-info-title" id="lbTitle"></div>
+    <div class="lb-info-tag" id="lbTag"></div>
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+  <div class="lb-filmstrip" id="lbFilmstrip"></div>
+</div>
+
+<!-- Back to top -->
+<button id="btt" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+<footer>
+  <div class="footer-inner">
+    <p>© 2025 CK & IJ Trading & Projects. All rights reserved.</p>
+    <div class="bbbee-pill"><div class="dot"></div>BBBEE Level 1 Contributor</div>
+  </div>
+</footer>
+
+<script>
+/* ─── CUSTOM CURSOR ─── */
+const cur = document.getElementById('cursor');
+const curRing = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+});
+function lerp(a, b, t) { return a + (b - a) * t; }
+(function animCursor() {
+  rx = lerp(rx, mx, 0.12); ry = lerp(ry, my, 0.12);
+  curRing.style.left = rx + 'px'; curRing.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+})();
+
+document.querySelectorAll('button, a, .g-item, .filter-tab').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover', 'cursor-view'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover', 'cursor-view'));
+});
+
+/* ─── NAV SCROLL ─── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  // progress bar
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  // back to top
+  const btt = document.getElementById('btt');
+  if (window.scrollY > 500) btt.classList.add('visible');
+  else btt.classList.remove('visible');
+});
+document.getElementById('btt').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ─── HERO LOADED ─── */
+window.addEventListener('load', () => {
+  setTimeout(() => document.body.classList.add('hero-loaded'), 300);
+});
+
+/* ─── VIDEO FALLBACK ─── */
+const heroVid = document.getElementById('heroVideo');
+if (heroVid) {
+  heroVid.addEventListener('error', () => {
+    heroVid.style.display = 'none';
+  });
+}
+
+/* ─── GALLERY DATA ─── */
+// Collect all g-items across featured + grid
+function getAllItems() {
+  return [...document.querySelectorAll('.g-item')];
+}
+
+/* ─── FILTER TABS ─── */
+document.getElementById('filterTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-tab');
+  if (!btn) return;
+  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter = btn.dataset.filter;
+  const allItems = getAllItems();
+  let visible = 0;
+  allItems.forEach(item => {
+    const cat = item.dataset.cat;
+    const show = filter === 'all' || cat === filter;
+    item.style.transition = 'opacity .4s ease, transform .4s ease';
+    if (show) {
+      item.style.display = '';
+      setTimeout(() => { item.style.opacity = '1'; item.style.transform = ''; }, 20);
+      visible++;
+    } else {
+      item.style.opacity = '0';
+      item.style.transform = 'scale(0.9)';
+      setTimeout(() => { item.style.display = 'none'; }, 420);
+    }
+  });
+  document.getElementById('visibleCount').textContent = visible;
+});
+
+/* ─── REVEAL ON SCROLL ─── */
+const revObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      const delay = (parseInt(e.target.dataset.revDelay) || 0);
+      setTimeout(() => e.target.classList.add('visible'), delay);
+      revObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.g-item').forEach((el, i) => {
+  el.dataset.revDelay = (i % 3) * 80;
+  revObserver.observe(el);
+});
+
+/* ─── COUNT ─── */
+const total = getAllItems().length;
+document.getElementById('totalCount').textContent = String(total).padStart(2, '0');
+document.getElementById('visibleCount').textContent = total;
+
+/* ─── 3D TILT on hover ─── */
+document.querySelectorAll('.g-item').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+/* ─── LIGHTBOX ─── */
+const lb = document.getElementById('lightbox');
+const lbContent = document.getElementById('lbContent');
+const lbTitle = document.getElementById('lbTitle');
+const lbTag = document.getElementById('lbTag');
+const lbCounter = document.getElementById('lbCounter');
+const lbFilmstrip = document.getElementById('lbFilmstrip');
+
+let lbItems = [];
+let lbIndex = 0;
+
+function buildLbItems() {
+  lbItems = [...document.querySelectorAll('.g-item:not([style*="display: none"])')].map(el => ({
+    el,
+    type: el.dataset.type || 'image',
+    src: el.dataset.type === 'video'
+      ? el.querySelector('video')?.src || el.querySelector('video source')?.src || ''
+      : el.querySelector('img')?.src || '',
+    poster: el.dataset.type === 'video' ? (el.querySelector('video')?.poster || '') : '',
+    title: el.dataset.title || '',
+    desc: el.dataset.desc || '',
+    tag: el.dataset.cat || ''
+  }));
+}
+
+function openLb(index) {
+  buildLbItems();
+  lbIndex = index;
+  renderLb();
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  buildFilmstrip();
+}
+
+function closeLb() {
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+  // cleanup video
+  const vid = lbContent.querySelector('video');
+  if (vid) { vid.pause(); vid.src = ''; }
+}
+
+function renderLb() {
+  const item = lbItems[lbIndex];
+  if (!item) return;
+
+  // keep corners
+  const corners = [...lbContent.querySelectorAll('.lb-corner')];
+  lbContent.innerHTML = '';
+  corners.forEach(c => lbContent.appendChild(c));
+
+  if (item.type === 'video') {
+    const vid = document.createElement('video');
+    vid.src = item.src; vid.poster = item.poster;
+    vid.controls = true; vid.autoplay = true;
+    vid.style.maxWidth = '90vw'; vid.style.maxHeight = '80vh';
+    vid.style.borderRadius = '12px';
+    lbContent.appendChild(vid);
+  } else {
+    const img = document.createElement('img');
+    img.src = item.src; img.alt = item.title;
+    lbContent.appendChild(img);
+  }
+
+  lbTitle.textContent = item.title;
+  lbTag.textContent = item.tag.toUpperCase();
+  lbCounter.textContent = `${lbIndex + 1} / ${lbItems.length}`;
+
+  // filmstrip active
+  document.querySelectorAll('.lb-thumb').forEach((t, i) => {
+    t.classList.toggle('active', i === lbIndex);
+    if (i === lbIndex) t.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  });
+}
+
+function buildFilmstrip() {
+  lbFilmstrip.innerHTML = '';
+  lbItems.forEach((item, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'lb-thumb' + (i === lbIndex ? ' active' : '');
+    if (item.type === 'video') {
+      const v = document.createElement('video');
+      v.src = item.src; v.poster = item.poster; v.muted = true;
+      thumb.appendChild(v);
+    } else {
+      const img = document.createElement('img');
+      img.src = item.src; img.alt = '';
+      thumb.appendChild(img);
+    }
+    thumb.addEventListener('click', () => { lbIndex = i; renderLb(); });
+    lbFilmstrip.appendChild(thumb);
+  });
+}
+
+function navLb(dir) {
+  lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
+  // animate out/in
+  lbContent.style.transform = `translateX(${dir > 0 ? '-40px' : '40px'}) scale(0.95)`;
+  lbContent.style.opacity = '0';
+  lbContent.style.transition = 'transform 0.25s ease, opacity 0.25s ease';
+  setTimeout(() => {
+    renderLb();
+    lbContent.style.transition = 'transform 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease';
+    lbContent.style.transform = '';
+    lbContent.style.opacity = '';
+  }, 250);
+}
+
+// Attach expand buttons
+document.querySelectorAll('.g-expand-btn').forEach((btn, i) => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    buildLbItems();
+    const item = btn.closest('.g-item');
+    const allItems = [...document.querySelectorAll('.g-item')];
+    const idx = lbItems.findIndex(li => li.el === item);
+    openLb(idx >= 0 ? idx : 0);
+  });
+});
+
+// Also click on item image
+document.querySelectorAll('.g-item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    if (e.target.closest('.g-expand-btn')) return;
+    buildLbItems();
+    const idx = lbItems.findIndex(li => li.el === item);
+    openLb(idx >= 0 ? idx : 0);
+  });
+});
+
+document.getElementById('lbClose').addEventListener('click', closeLb);
+document.getElementById('lbPrev').addEventListener('click', () => navLb(-1));
+document.getElementById('lbNext').addEventListener('click', () => navLb(1));
+
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('active')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight') navLb(1);
+  if (e.key === 'ArrowLeft') navLb(-1);
+});
+
+/* ─── TOUCH/SWIPE for lightbox ─── */
+let lbTouchX = null;
+lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener('touchend', e => {
+  if (lbTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - lbTouchX;
+  if (Math.abs(dx) > 50) navLb(dx < 0 ? 1 : -1);
+  lbTouchX = null;
+});
+</script>
+</body>
+</html>
